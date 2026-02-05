@@ -17,6 +17,7 @@
 package com.example.compose.jetchat.websocket.v1.conversation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +38,7 @@ import com.example.compose.jetchat.theme.JetchatTheme
 import com.example.compose.jetchat.websocket.v1.WsV1SocketManager
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateListOf
+import com.example.compose.jetchat.AppWebSocketManager
 
 class ConversationFragment : Fragment() {
     private val activityViewModel: MainViewModel by activityViewModels()
@@ -46,12 +48,13 @@ class ConversationFragment : Fragment() {
             layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
 
             setContent {
-                val messages = remember {
-                    mutableStateListOf<Message>()
-                }
+                // 1. Local UI messages
+                val messages = remember { mutableStateListOf<Message>() }
 
-                val socketManager = remember {
-                    WsV1SocketManager { text ->
+// 2. Listen to GLOBAL socket
+                LaunchedEffect(Unit) {
+                    AppWebSocketManager.events.collect { text ->
+                        Log.d("V1", "UI received: $text")
                         messages.add(
                             Message(
                                 author = "WS",
@@ -62,22 +65,11 @@ class ConversationFragment : Fragment() {
                     }
                 }
 
+// 3. Build UI state from local messages
                 val uiState = ConversationUiState(
                     initialMessages = messages,
                     channelName = "ws-v1",
                     channelMembers = 1
-                )
-
-                val emptyUiState = ConversationUiState(
-                    initialMessages = listOf(
-                        Message(
-                            author = "System",
-                            content = "This message is controlled by me",
-                            timestamp = "now"
-                        )
-                    ),
-                    channelName = "123",
-                    channelMembers = 42,
                 )
 
                 JetchatTheme {
@@ -95,23 +87,12 @@ class ConversationFragment : Fragment() {
                             activityViewModel.openDrawer()
                         },
                         onMessageSent = { text ->
-                            // 1. Show immediately in UI
                             messages.add(
-                                Message(
-                                    author = "me",
-                                    content = text,
-                                    timestamp = "now"
-                                )
+                                Message("me", text, "now")
                             )
-
-                            // 2. Send to WebSocket
-                            socketManager.send(text)
+                            AppWebSocketManager.send(text)
                         }
                     )
-                }
-
-                LaunchedEffect(Unit) {
-                    socketManager.connect()
                 }
             }
         }

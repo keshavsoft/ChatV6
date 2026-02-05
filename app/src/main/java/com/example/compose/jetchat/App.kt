@@ -1,4 +1,10 @@
 package com.example.compose.jetchat
 
-class App {
+import android.app.Application
+
+class App : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        AppWebSocketManager.connect()
+    }
 }
