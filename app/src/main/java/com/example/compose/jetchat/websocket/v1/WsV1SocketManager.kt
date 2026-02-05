@@ -3,7 +3,9 @@ package com.example.compose.jetchat.websocket.v1
 import android.util.Log
 import okhttp3.*
 
-class WsV1SocketManager {
+class WsV1SocketManager(
+    private val onMessage: (String) -> Unit
+) {
 
     private val client = OkHttpClient()
     private var webSocket: WebSocket? = null
@@ -29,6 +31,7 @@ class WsV1SocketManager {
 
         override fun onMessage(webSocket: WebSocket, text: String) {
             Log.d("WS_V1", "Received: $text")
+            onMessage(text)
         }
 
         override fun onFailure(

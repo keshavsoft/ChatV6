@@ -22,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -35,9 +36,10 @@ import com.example.compose.jetchat.conversation.Message
 import com.example.compose.jetchat.data.exampleUiState
 import com.example.compose.jetchat.theme.JetchatTheme
 import com.example.compose.jetchat.websocket.v1.WsV1SocketManager
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateListOf
 
 class ConversationFragment : Fragment() {
-    private val socketManager = WsV1SocketManager()
     private val activityViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
@@ -45,6 +47,27 @@ class ConversationFragment : Fragment() {
             layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
 
             setContent {
+                val messages = remember {
+                    mutableStateListOf<Message>()
+                }
+
+                val socketManager = remember {
+                    WsV1SocketManager { text ->
+                        messages.add(
+                            Message(
+                                author = "WS",
+                                content = text,
+                                timestamp = "now"
+                            )
+                        )
+                    }
+                }
+
+                val uiState = ConversationUiState(
+                    initialMessages = messages,
+                    channelName = "ws-v1",
+                    channelMembers = 1
+                )
 
                 val emptyUiState = ConversationUiState(
                     initialMessages = listOf(
@@ -60,7 +83,7 @@ class ConversationFragment : Fragment() {
 
                 JetchatTheme {
                     ConversationContent(
-                        uiState = emptyUiState,
+                        uiState = uiState,
                         navigateToProfile = { user ->
                             // Click callback
                             val bundle = bundleOf("userId" to user)
@@ -74,11 +97,15 @@ class ConversationFragment : Fragment() {
                         },
                     )
                 }
+
+                LaunchedEffect(Unit) {
+                    socketManager.connect()
+                }
             }
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        socketManager.connect()
+        //socketManager.connect()
     }
 }
