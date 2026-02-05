@@ -30,10 +30,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.compose.jetchat.MainViewModel
 import com.example.compose.jetchat.R
-import com.example.compose.jetchat.conversation.ConversationContent
-import com.example.compose.jetchat.conversation.ConversationUiState
-import com.example.compose.jetchat.conversation.Message
-import com.example.compose.jetchat.data.exampleUiState
+import com.example.compose.jetchat.websocket.v1.conversation.ConversationContent
+import com.example.compose.jetchat.websocket.v1.conversation.ConversationUiState
+import com.example.compose.jetchat.websocket.v1.conversation.Message
 import com.example.compose.jetchat.theme.JetchatTheme
 import com.example.compose.jetchat.websocket.v1.WsV1SocketManager
 import androidx.compose.runtime.remember
@@ -95,6 +94,19 @@ class ConversationFragment : Fragment() {
                         onNavIconPressed = {
                             activityViewModel.openDrawer()
                         },
+                        onMessageSent = { text ->
+                            // 1. Show immediately in UI
+                            messages.add(
+                                Message(
+                                    author = "me",
+                                    content = text,
+                                    timestamp = "now"
+                                )
+                            )
+
+                            // 2. Send to WebSocket
+                            socketManager.send(text)
+                        }
                     )
                 }
 
