@@ -1,7 +1,6 @@
 package com.example.compose.jetchat.websocket.common.conversation.v2
 
 import ConversationContent
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.example.compose.jetchat.AppWebSocketManager
@@ -18,15 +17,18 @@ fun ConversationV2Engine(
 ) {
 
     LaunchedEffect(Unit) {
-        AppWebSocketManager.events.collect { text ->
-            Log.d(logTag, "UI received: $text")
-            ConversationMessageStore.add(
-                Message("WS", text, "now")
-            )
-        }
+
     }
 
+    val incomingOnly = ConversationMessageStore.messages.filter { it.author == "WS" }
+
     val uiState = ConversationUiState(
+        initialMessages = incomingOnly,
+        channelName = channelName,
+        channelMembers = 1
+    )
+
+    val uiState1 = ConversationUiState(
         initialMessages = ConversationMessageStore.messages,
         channelName = channelName,
         channelMembers = 1

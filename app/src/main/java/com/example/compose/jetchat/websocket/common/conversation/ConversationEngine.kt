@@ -4,8 +4,6 @@ import ConversationContent
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import com.example.compose.jetchat.AppWebSocketManager
 
 @Composable
