@@ -27,6 +27,7 @@ fun ConversationV1Engine(
             )
         }
     }
+
     val uiState = ConversationUiState(
         initialMessages = ConversationMessageStore.messages,
         channelName = channelName,
