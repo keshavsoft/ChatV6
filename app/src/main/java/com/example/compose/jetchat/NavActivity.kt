@@ -17,6 +17,7 @@
 package com.example.compose.jetchat
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
@@ -57,6 +59,35 @@ class NavActivity : AppCompatActivity() {
             ComposeView(this).apply {
                 consumeWindowInsets = false
                 setContent {
+                    // 👇 ADD THIS AT THE VERY TOP
+                    val context = LocalContext.current
+
+                    LaunchedEffect(Unit) {
+                        AppWebSocketManager.connectionState.collect { state ->
+                            when (state) {
+                                SocketConnectionState.Connected -> {
+                                    Toast.makeText(
+                                        context,
+                                        "WebSocket connected",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+
+                                SocketConnectionState.Disconnected -> {
+                                    Toast.makeText(
+                                        context,
+                                        "WebSocket disconnected",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+
+                                else -> Unit
+                            }
+                        }
+                    }
+
+                    // ---- your EXISTING code continues below ----
+
                     val drawerState = rememberDrawerState(initialValue = Closed)
                     val drawerOpen by viewModel.drawerShouldBeOpened
                         .collectAsStateWithLifecycle()
