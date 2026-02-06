@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.compose.jetchat.websocket.v1.conversation
+package com.example.compose.jetchat.websocket.common.conversation
 
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.updateTransition

@@ -31,14 +31,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.compose.jetchat.MainViewModel
 import com.example.compose.jetchat.R
-import com.example.compose.jetchat.websocket.v1.conversation.ConversationContent
-import com.example.compose.jetchat.websocket.v1.conversation.ConversationUiState
-import com.example.compose.jetchat.websocket.v1.conversation.Message
+import com.example.compose.jetchat.websocket.common.conversation.ConversationUiState
+import com.example.compose.jetchat.websocket.common.conversation.Message
 import com.example.compose.jetchat.theme.JetchatTheme
-import com.example.compose.jetchat.websocket.v1.WsV1SocketManager
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateListOf
 import com.example.compose.jetchat.AppWebSocketManager
+import com.example.compose.jetchat.websocket.common.conversation.ConversationContent
 
 class ConversationFragment : Fragment() {
     private val activityViewModel: MainViewModel by activityViewModels()

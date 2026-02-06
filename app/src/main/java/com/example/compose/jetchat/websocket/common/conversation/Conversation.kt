@@ -16,7 +16,7 @@
 
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.example.compose.jetchat.websocket.v1.conversation
+package com.example.compose.jetchat.websocket.common.conversation
 
 import android.content.ClipDescription
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -90,18 +90,12 @@ import com.example.compose.jetchat.FunctionalityNotAvailablePopup
 import com.example.compose.jetchat.R
 import com.example.compose.jetchat.components.JetchatAppBar
 import com.example.compose.jetchat.theme.JetchatTheme
-import com.example.compose.jetchat.websocket.common.conversation.ConversationUiState
-import com.example.compose.jetchat.websocket.common.conversation.JumpToBottom
-import com.example.compose.jetchat.websocket.common.conversation.Message
-import com.example.compose.jetchat.websocket.common.conversation.SymbolAnnotationType
-import com.example.compose.jetchat.websocket.common.conversation.UserInput
-import com.example.compose.jetchat.websocket.common.conversation.messageFormatter
 import kotlinx.coroutines.launch
 
 /**
  * Entry point for a conversation screen.
  *
- * @param uiState [com.example.compose.jetchat.websocket.common.conversation.ConversationUiState] that contains messages to display
+ * @param uiState [ConversationUiState] that contains messages to display
  * @param navigateToProfile User action when navigation to a profile is requested
  * @param modifier [Modifier] to apply to this layout node
  * @param onNavIconPressed Sends an event up when the user clicks on the menu

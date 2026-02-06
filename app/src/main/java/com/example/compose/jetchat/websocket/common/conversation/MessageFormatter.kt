@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.compose.jetchat.websocket.v1.conversation
+package com.example.compose.jetchat.websocket.common.conversation
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
