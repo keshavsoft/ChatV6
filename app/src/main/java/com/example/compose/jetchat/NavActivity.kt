@@ -60,74 +60,40 @@ class NavActivity : AppCompatActivity() {
                 consumeWindowInsets = false
                 setContent {
                     // 👇 ADD THIS AT THE VERY TOP
-                    val context = LocalContext.current
-
-                    LaunchedEffect(Unit) {
-                        AppWebSocketManager.connectionState.collect { state ->
-                            when (state) {
-                                SocketConnectionState.Connected -> {
-                                    Toast.makeText(
-                                        context,
-                                        "WebSocket connected",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-
-                                SocketConnectionState.Disconnected -> {
-                                    Toast.makeText(
-                                        context,
-                                        "WebSocket disconnected",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-
-                                else -> Unit
-                            }
-                        }
-                    }
-
+                    WebSocketConnectionToast()
                     // ---- your EXISTING code continues below ----
 
                     val drawerState = rememberDrawerState(initialValue = Closed)
-                    val drawerOpen by viewModel.drawerShouldBeOpened
-                        .collectAsStateWithLifecycle()
 
-                    var selectedMenu by remember { mutableStateOf("composers") }
-                    if (drawerOpen) {
-                        // Open drawer and reset state in VM.
-                        LaunchedEffect(Unit) {
-                            // wrap in try-finally to handle interruption whiles opening drawer
-                            try {
-                                drawerState.open()
-                            } finally {
-                                viewModel.resetOpenDrawerAction()
-                            }
-                        }
-                    }
+                    HandleDrawerOpen(
+                        drawerState = drawerState,
+                        viewModel = viewModel
+                    )
 
                     val scope = rememberCoroutineScope()
+
+                    var selectedMenu by remember { mutableStateOf("composers") }
 
                     JetchatDrawer(
                         drawerState = drawerState,
                         selectedMenu = selectedMenu,
                         onChatClicked = {
-                            if (it == "ws_v1") {
-                                findNavController().navigate(R.id.nav_ws_v1)
-                            } else {
-                                findNavController().popBackStack(R.id.nav_home, false)
-                            }
-                            scope.launch {
-                                drawerState.close()
-                            }
-                            selectedMenu = it
+                            handleChatClick(
+                                item = it,
+                                navController = findNavController(),
+                                drawerState = drawerState,
+                                scope = scope,
+                                onSelected = { selectedMenu = it }
+                            )
                         },
                         onProfileClicked = {
-                            val bundle = bundleOf("userId" to it)
-                            findNavController().navigate(R.id.nav_profile, bundle)
-                            scope.launch {
-                                drawerState.close()
-                            }
-                            selectedMenu = it
+                            handleProfileClick(
+                                userId = it,
+                                navController = findNavController(),
+                                drawerState = drawerState,
+                                scope = scope,
+                                onSelected = { selectedMenu = it }
+                            )
                         },
                     ) {
                         AndroidViewBinding(ContentMainBinding::inflate)
