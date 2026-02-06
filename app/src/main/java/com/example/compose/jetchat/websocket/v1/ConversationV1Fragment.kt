@@ -21,7 +21,7 @@ import com.example.compose.jetchat.websocket.common.conversation.ConversationCon
 import com.example.compose.jetchat.websocket.common.conversation.ConversationUiState
 import com.example.compose.jetchat.websocket.common.conversation.Message
 
-class ConversationFragment : Fragment() {
+class ConversationV1Fragment : Fragment() {
     private val activityViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =

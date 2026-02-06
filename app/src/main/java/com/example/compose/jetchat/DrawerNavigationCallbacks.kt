@@ -5,7 +5,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import androidx.core.os.bundleOf
 import androidx.compose.material3.DrawerState
-
 fun handleChatClick(
     item: String,
     navController: NavController,
@@ -13,11 +12,12 @@ fun handleChatClick(
     scope: CoroutineScope,
     onSelected: (String) -> Unit
 ) {
-    if (item == "ws_v1") {
-        navController.navigate(R.id.nav_ws_v1)
-    } else {
-        navController.popBackStack(R.id.nav_home, false)
+    when (item) {
+        "ws_v1" -> navController.navigate(R.id.nav_ws_v1)
+        "ws_v2" -> navController.navigate(R.id.nav_ws_v2)
+        else -> navController.popBackStack(R.id.nav_home, false)
     }
+
     scope.launch { drawerState.close() }
     onSelected(item)
 }

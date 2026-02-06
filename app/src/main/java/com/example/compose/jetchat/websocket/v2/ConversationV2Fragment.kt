@@ -1,4 +1,4 @@
-package com.example.compose.jetchat.websocket.v1
+package com.example.compose.jetchat.websocket.v2
 
 import android.os.Bundle
 import android.util.Log
@@ -21,7 +21,7 @@ import com.example.compose.jetchat.websocket.common.conversation.ConversationCon
 import com.example.compose.jetchat.websocket.common.conversation.ConversationUiState
 import com.example.compose.jetchat.websocket.common.conversation.Message
 
-class ConversationV1Fragment : Fragment() {
+class ConversationV2Fragment : Fragment() {
     private val activityViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
@@ -38,7 +38,7 @@ class ConversationV1Fragment : Fragment() {
 // 2. Listen to GLOBAL socket
                 LaunchedEffect(Unit) {
                     AppWebSocketManager.events.collect { text ->
-                        Log.d("V1", "UI received: $text")
+                        Log.d("V2", "UI received: $text")
                         messages.add(
                             Message(
                                 author = "WS",
@@ -52,7 +52,7 @@ class ConversationV1Fragment : Fragment() {
 // 3. Build UI state from local messages
                 val uiState = ConversationUiState(
                     initialMessages = messages,
-                    channelName = "ws-v1",
+                    channelName = "ws-v2",
                     channelMembers = 1
                 )
 
