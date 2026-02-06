@@ -35,8 +35,8 @@ class ConversationV2Fragment : Fragment() {
             setContent {
                 JetchatTheme {
                     ConversationEngine(
-                        channelName = "ws-v1",
-                        logTag = "V1",
+                        channelName = "ws-v2",
+                        logTag = "V2",
                         navigateToProfile = { user ->
                             findNavController().navigate(
                                 R.id.nav_profile,
