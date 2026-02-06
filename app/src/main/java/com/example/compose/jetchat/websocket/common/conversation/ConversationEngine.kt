@@ -14,17 +14,15 @@ fun ConversationEngine(
     onNavIconPressed: () -> Unit,
     navigateToProfile: (String) -> Unit
 ) {
-    val messages = remember { mutableStateListOf<Message>() }
+    val messages = ConversationMessageStore.messages(channelName)
 
     LaunchedEffect(Unit) {
         AppWebSocketManager.events.collect { text ->
             Log.d(logTag, "UI received: $text")
-            messages.add(
-                Message(
-                    author = "WS",
-                    content = text,
-                    timestamp = "now"
-                )
+
+            ConversationMessageStore.add(
+                channelName,
+                Message("WS", text, "now")
             )
         }
     }
@@ -40,7 +38,10 @@ fun ConversationEngine(
         navigateToProfile = navigateToProfile,
         onNavIconPressed = onNavIconPressed,
         onMessageSent = { text ->
-            messages.add(Message("me", text, "now"))
+            ConversationMessageStore.add(
+                channelName,
+                Message("me", text, "now")
+            )
             AppWebSocketManager.send(text)
         }
     )
