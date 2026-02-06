@@ -60,6 +60,7 @@ import com.example.compose.jetchat.data.colleagueProfile
 import com.example.compose.jetchat.data.meProfile
 import com.example.compose.jetchat.theme.JetchatTheme
 import com.example.compose.jetchat.widget.WidgetReceiver
+import com.example.compose.jetchat.components.CHAT_VERSIONS
 
 @Composable
 fun JetchatDrawerContent(onProfileClicked: (String) -> Unit, onChatClicked: (String) -> Unit, selectedMenu: String = "composers") {
@@ -80,12 +81,13 @@ fun JetchatDrawerContent(onProfileClicked: (String) -> Unit, onChatClicked: (Str
         DividerItem(modifier = Modifier.padding(horizontal = 28.dp))
         DrawerItemHeader("WebSocket")
 
-        ChatItem("v1", selectedMenu == "ws_v1") {
-            onChatClicked("ws_v1")
-        }
-
-        ChatItem("v2", selectedMenu == "ws_v2") {
-            onChatClicked("ws_v2")
+        CHAT_VERSIONS.forEach { version ->
+            ChatItem(
+                text = version.title,
+                selected = selectedMenu == version.id
+            ) {
+                onChatClicked(version.id)
+            }
         }
 
         DividerItem(modifier = Modifier.padding(horizontal = 28.dp))

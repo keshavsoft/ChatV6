@@ -1,10 +1,12 @@
 package com.example.compose.jetchat
 
+import androidx.compose.material3.DrawerState
 import androidx.navigation.NavController
+import com.example.compose.jetchat.components.CHAT_VERSIONS
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import androidx.core.os.bundleOf
-import androidx.compose.material3.DrawerState
+
 fun handleChatClick(
     item: String,
     navController: NavController,
@@ -12,10 +14,12 @@ fun handleChatClick(
     scope: CoroutineScope,
     onSelected: (String) -> Unit
 ) {
-    when (item) {
-        "ws_v1" -> navController.navigate(R.id.nav_ws_v1)
-        "ws_v2" -> navController.navigate(R.id.nav_ws_v2)
-        else -> navController.popBackStack(R.id.nav_home, false)
+    val version = CHAT_VERSIONS.find { it.id == item }
+
+    if (version != null) {
+        navController.navigate(version.navId)
+    } else {
+        navController.popBackStack(R.id.nav_home, false)
     }
 
     scope.launch { drawerState.close() }
@@ -29,8 +33,10 @@ fun handleProfileClick(
     scope: CoroutineScope,
     onSelected: (String) -> Unit
 ) {
-    val bundle = bundleOf("userId" to userId)
-    navController.navigate(R.id.nav_profile, bundle)
+    navController.navigate(
+        R.id.nav_profile,
+        bundleOf("userId" to userId)
+    )
     scope.launch { drawerState.close() }
     onSelected(userId)
 }
