@@ -7,7 +7,7 @@ import androidx.compose.ui.draganddrop.DragAndDropEvent
 import androidx.compose.ui.draganddrop.DragAndDropTarget
 import androidx.compose.ui.draganddrop.toAndroidDragEvent
 import androidx.compose.ui.graphics.Color
-import com.example.compose.jetchat.websocket.common.conversation.Message
+import com.example.compose.jetchat.websocket.common.conversation.message.Message
 
 @Composable
 fun rememberConversationDragAndDrop(

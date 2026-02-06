@@ -17,7 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.compose.jetchat.websocket.common.conversation.Message
+import com.example.compose.jetchat.websocket.common.conversation.message.Message
 
 @Composable
 public fun Message(

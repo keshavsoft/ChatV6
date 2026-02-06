@@ -38,7 +38,7 @@ import com.example.compose.jetchat.websocket.common.conversation.ui.ChannelNameB
 import com.example.compose.jetchat.websocket.common.conversation.ui.ConversationScaffold
 import com.example.compose.jetchat.websocket.common.conversation.ui.DayHeader
 import com.example.compose.jetchat.websocket.common.conversation.ui.Messages
-import com.example.compose.jetchat.websocket.common.conversation.ui.UserInput
+import com.example.compose.jetchat.websocket.common.conversation.userinput.UserInput
 import com.example.compose.jetchat.websocket.common.conversation.ui.rememberConversationDragAndDrop
 import kotlinx.coroutines.launch
 

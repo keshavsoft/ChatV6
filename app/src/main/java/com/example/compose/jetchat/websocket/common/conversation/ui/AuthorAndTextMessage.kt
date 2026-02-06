@@ -6,7 +6,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.compose.jetchat.websocket.common.conversation.Message
+import com.example.compose.jetchat.websocket.common.conversation.message.Message
+import com.example.compose.jetchat.websocket.common.conversation.message.AuthorNameTimestamp
 
 @Composable
 fun AuthorAndTextMessage(

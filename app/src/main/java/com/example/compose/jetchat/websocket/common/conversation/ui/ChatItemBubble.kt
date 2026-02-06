@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.compose.jetchat.R
-import com.example.compose.jetchat.websocket.common.conversation.Message
+import com.example.compose.jetchat.websocket.common.conversation.message.Message
 
 private val ChatBubbleShape = RoundedCornerShape(4.dp, 20.dp, 20.dp, 20.dp)
 

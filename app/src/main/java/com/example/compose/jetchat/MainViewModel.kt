@@ -3,7 +3,7 @@ package com.example.compose.jetchat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.compose.jetchat.websocket.common.conversation.ConversationMessageStore
-import com.example.compose.jetchat.websocket.common.conversation.Message
+import com.example.compose.jetchat.websocket.common.conversation.message.Message
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

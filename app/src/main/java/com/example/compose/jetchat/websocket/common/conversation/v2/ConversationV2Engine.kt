@@ -6,7 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import com.example.compose.jetchat.AppWebSocketManager
 import com.example.compose.jetchat.websocket.common.conversation.ConversationMessageStore
 import com.example.compose.jetchat.websocket.common.conversation.ConversationUiState
-import com.example.compose.jetchat.websocket.common.conversation.Message
+import com.example.compose.jetchat.websocket.common.conversation.message.Message
 
 @Composable
 fun ConversationV2Engine(
