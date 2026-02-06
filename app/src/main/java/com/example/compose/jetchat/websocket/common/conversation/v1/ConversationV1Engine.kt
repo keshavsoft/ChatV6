@@ -1,12 +1,10 @@
 package com.example.compose.jetchat.websocket.common.conversation.v1
 
+import ConversationContent
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import com.example.compose.jetchat.AppWebSocketManager
-import com.example.compose.jetchat.websocket.common.conversation.ConversationContent
 import com.example.compose.jetchat.websocket.common.conversation.ConversationMessageStore
 import com.example.compose.jetchat.websocket.common.conversation.ConversationUiState
 import com.example.compose.jetchat.websocket.common.conversation.Message

@@ -17,10 +17,7 @@ import com.example.compose.jetchat.AppWebSocketManager
 import com.example.compose.jetchat.MainViewModel
 import com.example.compose.jetchat.R
 import com.example.compose.jetchat.theme.JetchatTheme
-import com.example.compose.jetchat.websocket.common.conversation.ConversationContent
 import com.example.compose.jetchat.websocket.common.conversation.ConversationEngine
-import com.example.compose.jetchat.websocket.common.conversation.ConversationUiState
-import com.example.compose.jetchat.websocket.common.conversation.Message
 
 class ConversationV2Fragment : Fragment() {
     private val activityViewModel: MainViewModel by activityViewModels()

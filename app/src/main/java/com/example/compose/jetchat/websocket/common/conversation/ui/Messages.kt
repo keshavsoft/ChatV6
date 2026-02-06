@@ -1,5 +1,6 @@
 package com.example.compose.jetchat.websocket.common.conversation.ui
 
+import ConversationTestTag
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,7 +17,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.compose.jetchat.R
-import com.example.compose.jetchat.websocket.common.conversation.ConversationTestTag
 import com.example.compose.jetchat.websocket.common.conversation.JumpToBottom
 import com.example.compose.jetchat.websocket.common.conversation.Message
 import kotlinx.coroutines.launch
