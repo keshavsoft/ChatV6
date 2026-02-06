@@ -41,7 +41,7 @@
 
     <fragment
         android:id="@+id/nav_ws_v2"
-        android:name="com.example.compose.jetchat.websocket.ConversationV2Fragment"
+        android:name="com.example.compose.jetchat.websocket.common.conversation.v2.ConversationV2Fragment"
         android:label="WebSocket v2" />
 
 </navigation>
