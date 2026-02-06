@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Adding a New Chat Version (V3)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --accent: #38bdf8;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --success: #22c55e;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: linear-gradient(120deg, #020617, #020617, #0f172a);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 48px 24px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    header p {
+      color: var(--muted);
+      max-width: 700px;
+      margin: auto;
+    }
+
+    main {
+      max-width: 920px;
+      margin: auto;
+      padding: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.4);
+      animation: fadeUp .6s ease both;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .step {
+      display: flex;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    code {
+      display: block;
+      background: #020617;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 12px;
+      overflow-x: auto;
+      color: #7dd3fc;
+    }
+
+    .success {
+      background: rgba(34,197,94,.1);
+      border: 1px solid rgba(34,197,94,.3);
+      color: var(--success);
+      padding: 16px;
+      border-radius: 12px;
+      margin-top: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px;
+      color: var(--muted);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>🚀 Adding a New Chat Version (V3)</h1>
+  <p>
+    This guide explains how to safely add a new WebSocket chat version
+    without breaking existing versions.  
+    Follow these steps every time you create V3, V4, or beyond.
+  </p>
+</header>
+
+<main>
+
+  <section class="card">
+    <h2>🧠 Architecture Rule</h2>
+    <p>
+      Each chat version has its <strong>own Fragment</strong>, but shares:
+    </p>
+    <ul>
+      <li>🔁 One global WebSocket connection</li>
+      <li>🧩 One common Conversation UI</li>
+      <li>🗂 Isolated message history per version</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>🪜 Step-by-Step: Create V3</h2>
+
+    <div class="step">
+      <div class="step-number">1</div>
+      <div>
+        <strong>Create Fragment</strong>
+        <code>
+ConversationV3Fragment.kt
+        </code>
+        Copy an existing version fragment and rename:
+        <ul>
+          <li>Class name → <code>ConversationV3Fragment</code></li>
+          <li>Channel name → <code>ws-v3</code></li>
+          <li>Log tag → <code>V3</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <div>
+        <strong>Register Navigation</strong>
+        <code>
+&lt;fragment
+  android:id="@+id/nav_ws_v3"
+  android:name="...ConversationV3Fragment"
+  android:label="WebSocket V3" /&gt;
+        </code>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <div>
+        <strong>Add Version Entry</strong>
+        <code>
+ChatVersion(
+  id = "ws_v3",
+  navId = R.id.nav_ws_v3,
+  title = "WebSocket V3"
+)
+        </code>
+        No drawer changes needed.
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>💬 Message Isolation</h2>
+    <p>
+      Each version keeps its own history using:
+    </p>
+    <code>
+ConversationMessageStore.messages("ws-v3")
+    </code>
+    Switching between versions will never mix messages.
+  </section>
+
+  <section class="card">
+    <h2>✅ Final Checklist</h2>
+    <div class="success">
+      🎉
+      <div>
+        <strong>V3 is ready!</strong>
+        <ul>
+          <li>Drawer shows V3 automatically</li>
+          <li>Socket connects only once</li>
+          <li>V1, V2, V3 states are isolated</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Built with ❤️ for scalable versioned chat systems
+</footer>
+
+</body>
+</html>
