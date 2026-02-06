@@ -18,6 +18,7 @@ import com.example.compose.jetchat.MainViewModel
 import com.example.compose.jetchat.R
 import com.example.compose.jetchat.theme.JetchatTheme
 import com.example.compose.jetchat.websocket.common.conversation.ConversationContent
+import com.example.compose.jetchat.websocket.common.conversation.ConversationEngine
 import com.example.compose.jetchat.websocket.common.conversation.ConversationUiState
 import com.example.compose.jetchat.websocket.common.conversation.Message
 
@@ -32,49 +33,18 @@ class ConversationV2Fragment : Fragment() {
             )
 
             setContent {
-                // 1. Local UI messages
-                val messages = remember { mutableStateListOf<Message>() }
-
-// 2. Listen to GLOBAL socket
-                LaunchedEffect(Unit) {
-                    AppWebSocketManager.events.collect { text ->
-                        Log.d("V2", "UI received: $text")
-                        messages.add(
-                            Message(
-                                author = "WS",
-                                content = text,
-                                timestamp = "now"
-                            )
-                        )
-                    }
-                }
-
-// 3. Build UI state from local messages
-                val uiState = ConversationUiState(
-                    initialMessages = messages,
-                    channelName = "ws-v2",
-                    channelMembers = 1
-                )
-
                 JetchatTheme {
-                    ConversationContent(
-                        uiState = uiState,
+                    ConversationEngine(
+                        channelName = "ws-v1",
+                        logTag = "V1",
                         navigateToProfile = { user ->
-                            // Click callback
-                            val bundle = bundleOf("userId" to user)
                             findNavController().navigate(
                                 R.id.nav_profile,
-                                bundle,
+                                bundleOf("userId" to user)
                             )
                         },
                         onNavIconPressed = {
                             activityViewModel.openDrawer()
-                        },
-                        onMessageSent = { text ->
-                            messages.add(
-                                Message("me", text, "now")
-                            )
-                            AppWebSocketManager.send(text)
                         }
                     )
                 }
