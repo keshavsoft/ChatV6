@@ -36,6 +36,6 @@
 
     <fragment
         android:id="@+id/nav_ws_v1"
-        android:name="com.example.compose.jetchat.websocket.v1.conversation.ConversationFragment"
+        android:name="com.example.compose.jetchat.websocket.v1.ConversationFragment"
         android:label="WebSocket v1" />
 </navigation>
